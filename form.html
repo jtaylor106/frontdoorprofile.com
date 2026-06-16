@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started — FrontDoor Profile</title>
+  <meta name="description" content="Fill out our quick questionnaire and we'll set up your Google Business Profile within a few business days.">
+  <style>
+    :root {
+      --navy:     #0F4C81;
+      --navy-dk:  #0A3357;
+      --green:    #22C55E;
+      --green-bg: #DCFCE7;
+      --green-dk: #166534;
+      --dark:     #0F172A;
+      --body:     #1E293B;
+      --muted:    #64748B;
+      --border:   #E2E8F0;
+      --bg-alt:   #F8FAFC;
+      --white:    #FFFFFF;
+      --red:      #EF4444;
+      --red-bg:   #FEF2F2;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg-alt); color: var(--body);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: .95rem; font-weight: 800; color: var(--navy); letter-spacing: -.02em; text-decoration: none; }
+    .logo .dot { color: var(--green); }
+    .nav-back { font-size: .8rem; color: var(--muted); text-decoration: none; font-weight: 500; }
+    .nav-back:hover { color: var(--navy); }
+
+    /* ── LAYOUT ── */
+    .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1rem 5rem; }
+
+    /* ── PROGRESS ── */
+    .prog-wrap { margin-bottom: 1.75rem; }
+    .prog-meta { display: flex; justify-content: space-between; margin-bottom: .45rem; }
+    .prog-label { font-size: .75rem; font-weight: 600; color: var(--muted); }
+    .prog-pct   { font-size: .75rem; font-weight: 700; color: var(--navy); }
+    .prog-track { height: 5px; background: var(--border); border-radius: 100px; overflow: hidden; }
+    .prog-fill  { height: 100%; background: var(--green); border-radius: 100px; transition: width .4s ease; }
+
+    /* ── STEPS ── */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2.25rem;
+      margin-bottom: 1rem; box-shadow: 0 1px 8px rgba(0,0,0,.04);
+    }
+
+    /* ── STEP HEADER ── */
+    .eyebrow { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--navy); margin-bottom: .35rem; }
+    .step-title { font-size: 1.35rem; font-weight: 800; color: var(--dark); letter-spacing: -.025em; margin-bottom: .3rem; }
+    .step-desc  { font-size: .85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.75rem; }
+
+    /* ── FIELDS ── */
+    .field { margin-bottom: 1.35rem; }
+    .field:last-child { margin-bottom: 0; }
+    .lbl  { display: block; font-size: .8rem; font-weight: 700; color: var(--body); margin-bottom: .4rem; }
+    .req  { color: var(--red); margin-left: 2px; }
+    .hint { font-size: .775rem; color: var(--muted); margin-bottom: .45rem; line-height: 1.55; }
+
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="url"], textarea, select {
+      width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+      padding: .7rem .9rem; font-size: .875rem; color: var(--dark);
+      font-family: inherit; outline: none; background: var(--white);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--navy); box-shadow: 0 0 0 3px rgba(15,76,129,.1);
+    }
+    input.err, textarea.err { border-color: var(--red); }
+    textarea { resize: vertical; min-height: 86px; line-height: 1.6; }
+    select {
+      cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath fill='none' stroke='%2364748B' stroke-width='1.5' d='M1 1l4.5 4.5L10 1'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .9rem center; padding-right: 2.5rem;
+    }
+
+    /* ── OPTIONS (radio / checkbox) ── */
+    .opt-group { display: flex; flex-direction: column; gap: .4rem; }
+    .opt {
+      display: flex; align-items: flex-start; gap: .65rem;
+      padding: .65rem .9rem; border: 1.5px solid var(--border); border-radius: 8px;
+      cursor: pointer; transition: all .15s; user-select: none;
+    }
+    .opt:hover { border-color: #93C5FD; background: #F8FBFF; }
+    .opt.sel   { border-color: var(--navy); background: #EFF6FF; }
+    .opt input { margin-top: 2px; flex-shrink: 0; accent-color: var(--navy); width: 15px; height: 15px; cursor: pointer; }
+    .opt-text  { font-size: .875rem; color: var(--body); line-height: 1.4; }
+    .opt-sub   { font-size: .775rem; color: var(--muted); margin-top: 1px; }
+
+    /* ── INDUSTRY GRID ── */
+    .ind-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
+    .ind-opt {
+      display: flex; align-items: center; gap: .55rem;
+      padding: .6rem .8rem; border: 1.5px solid var(--border); border-radius: 8px;
+      cursor: pointer; font-size: .82rem; color: var(--body); font-weight: 500;
+      transition: all .15s; user-select: none;
+    }
+    .ind-opt:hover { border-color: #93C5FD; background: #F8FBFF; }
+    .ind-opt.sel   { border-color: var(--navy); background: #EFF6FF; color: var(--navy); font-weight: 700; }
+    .ind-opt input { accent-color: var(--navy); flex-shrink: 0; width: 14px; height: 14px; cursor: pointer; }
+
+    /* ── SERVICES GRID ── */
+    .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem; }
+    .svc {
+      display: flex; align-items: flex-start; gap: .5rem;
+      padding: .5rem .7rem; border: 1.5px solid var(--border); border-radius: 7px;
+      cursor: pointer; font-size: .82rem; color: var(--body); line-height: 1.35;
+      transition: all .15s; user-select: none;
+    }
+    .svc:hover { border-color: #6EE7B7; }
+    .svc.sel   { border-color: var(--green); background: var(--green-bg); }
+    .svc input { accent-color: var(--green); flex-shrink: 0; margin-top: 2px; width: 14px; height: 14px; cursor: pointer; }
+
+    /* ── HOURS PICKER ── */
+    .day-row {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .55rem .85rem; border: 1.5px solid var(--border); border-radius: 8px;
+      margin-bottom: .4rem; transition: background .15s, border-color .15s;
+    }
+    .day-row.open { background: #F0FDF4; border-color: #86EFAC; }
+    .day-chk { width: 16px; height: 16px; accent-color: var(--green); cursor: pointer; flex-shrink: 0; }
+    .day-nm   { font-size: .85rem; font-weight: 600; color: var(--body); width: 90px; flex-shrink: 0; }
+    .day-cl   { font-size: .75rem; color: var(--muted); font-weight: 500; }
+    .day-t    { display: none; align-items: center; gap: .4rem; flex: 1; }
+    .day-t.show { display: flex; }
+    .day-t input[type="time"] {
+      flex: 1; min-width: 0;
+      border: 1.5px solid #86EFAC; border-radius: 6px;
+      padding: .22rem .4rem; font-size: .8rem; background: var(--white);
+      font-family: inherit; color: var(--dark); outline: none;
+      /* Override global focus */
+      box-shadow: none !important;
+    }
+    .day-t input[type="time"]:focus { border-color: var(--green); }
+    .t-sep { font-size: .72rem; color: var(--muted); flex-shrink: 0; }
+
+    /* ── PLAN CARDS ── */
+    .plan-opt {
+      display: flex; align-items: flex-start; gap: .7rem;
+      padding: .85rem 1rem; border: 1.5px solid var(--border); border-radius: 10px;
+      cursor: pointer; transition: all .15s; user-select: none; margin-bottom: .5rem;
+    }
+    .plan-opt:hover { border-color: #93C5FD; background: #F8FBFF; }
+    .plan-opt.sel   { border-color: var(--navy); background: #EFF6FF; }
+    .plan-opt input { accent-color: var(--navy); flex-shrink: 0; margin-top: 3px; width: 15px; height: 15px; cursor: pointer; }
+    .plan-name  { font-size: .9rem; font-weight: 700; color: var(--dark); }
+    .plan-price { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: .15rem; }
+    .plan-desc  { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── BUTTONS ── */
+    .form-nav { display: flex; gap: .75rem; margin-top: 1.1rem; }
+    .btn {
+      padding: .85rem 1.75rem; border-radius: 8px; font-weight: 700;
+      font-size: .875rem; font-family: inherit; cursor: pointer; border: none;
+      transition: all .18s; white-space: nowrap;
+    }
+    .btn-primary { background: var(--navy); color: white; flex: 1; }
+    .btn-primary:hover:not(:disabled) { background: var(--navy-dk); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(15,76,129,.25); }
+    .btn-ghost   { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-ghost:hover { background: var(--bg-alt); }
+    .btn-submit  { background: var(--green); color: #052E16; flex: 1; font-weight: 800; }
+    .btn-submit:hover:not(:disabled) { background: #16A34A; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(34,197,94,.3); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+    /* ── ERROR BANNER ── */
+    .err-msg {
+      display: none; background: var(--red-bg); border: 1px solid #FECACA;
+      border-radius: 8px; padding: .65rem .9rem;
+      font-size: .82rem; color: #B91C1C; margin-top: .75rem; line-height: 1.5;
+    }
+    .err-msg.show { display: block; }
+
+    /* ── SUCCESS ── */
+    .success-wrap { text-align: center; padding: 2.5rem 1rem; }
+    .success-icon {
+      width: 72px; height: 72px; background: var(--green-bg); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; color: var(--green-dk); margin: 0 auto 1.5rem;
+    }
+    .success-wrap h2 { font-size: 1.5rem; font-weight: 800; color: var(--dark); letter-spacing: -.02em; margin-bottom: .5rem; }
+    .success-wrap p  { font-size: .875rem; color: var(--muted); line-height: 1.75; max-width: 420px; margin: 0 auto; }
+    .success-wrap a  { display: inline-block; margin-top: 2rem; color: var(--navy); font-size: .875rem; font-weight: 700; text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 580px) {
+      .card { padding: 1.4rem; }
+      .ind-grid, .svc-grid { grid-template-columns: 1fr; }
+      .form-nav { flex-direction: column-reverse; }
+      .btn-ghost { width: 100%; }
+      .day-nm { width: 72px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .btn:hover { transform: none; box-shadow: none; }
+      .prog-fill { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">FrontDoor<span class="dot"> Profile</span></a>
+  <a href="index.html" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- PROGRESS -->
+  <div class="prog-wrap" id="prog-wrap">
+    <div class="prog-meta">
+      <span class="prog-label" id="prog-label">Step 1 of 4 — About Your Business</span>
+      <span class="prog-pct"   id="prog-pct">25%</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:25%"></div></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       STEP 1 — BASIC INFORMATION
+  ══════════════════════════════════════════════ -->
+  <div class="step active" id="step-1">
+    <div class="card">
+      <div class="eyebrow">Step 1 of 4</div>
+      <div class="step-title">About Your Business</div>
+      <div class="step-desc">This information forms the foundation of your Google Business Profile. Fields marked <span style="color:var(--red)">*</span> are required.</div>
+
+      <div class="field">
+        <label class="lbl" for="f-biz">Business Name <span class="req">*</span></label>
+        <input type="text" id="f-biz" placeholder="e.g. Mike's Plumbing Co." autocomplete="organization">
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-owner">Your Name (Owner or Manager) <span class="req">*</span></label>
+        <input type="text" id="f-owner" placeholder="e.g. Mike Johnson" autocomplete="name">
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-email">Email Address <span class="req">*</span></label>
+        <input type="email" id="f-email" placeholder="you@yourbusiness.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-phone">Phone Number <span class="req">*</span></label>
+        <input type="tel" id="f-phone" placeholder="(555) 555-5555" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-web">Website URL</label>
+        <p class="hint">Leave blank if you don't have a website yet — that's totally fine!</p>
+        <input type="url" id="f-web" placeholder="https://www.yourbusiness.com">
+      </div>
+      <div class="field">
+        <label class="lbl">Do customers come to your physical location? <span class="req">*</span></label>
+        <div class="opt-group" id="grp-loc">
+          <label class="opt"><input type="radio" name="loctype" value="Yes — I have a storefront or office customers visit"><span class="opt-text">Yes — I have a storefront or office customers visit</span></label>
+          <label class="opt"><input type="radio" name="loctype" value="No — I travel to my customers (home service / mobile)"><span class="opt-text">No — I travel to my customers (home service / mobile)</span></label>
+          <label class="opt"><input type="radio" name="loctype" value="Both — I have a location AND serve a surrounding area"><span class="opt-text">Both — I have a location AND serve a surrounding area</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-addr">Business Address</label>
+        <p class="hint">Full address including city, state, and ZIP. Skip if you are home-based and prefer not to show your address publicly on Google.</p>
+        <input type="text" id="f-addr" placeholder="123 Main St, Springfield, IL 62701" autocomplete="street-address">
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-area">Cities / ZIP Codes You Serve</label>
+        <p class="hint">List all cities, towns, or ZIP codes where you provide service. Example: Austin, Round Rock, Cedar Park TX — or — All of Travis County</p>
+        <textarea id="f-area" rows="2" placeholder="e.g. Springfield, Shelbyville, and surrounding areas within 30 miles"></textarea>
+      </div>
+    </div>
+
+    <!-- HOURS CARD -->
+    <div class="card">
+      <label class="lbl">Business Hours <span class="req">*</span></label>
+      <p class="hint">Check each day you're open and enter your hours. Leave unchecked for days you're closed.</p>
+      <div id="hours-picker"><!-- built by JS --></div>
+    </div>
+
+    <!-- YEAR + DESCRIPTION -->
+    <div class="card">
+      <div class="field">
+        <label class="lbl" for="f-year">Year Established</label>
+        <p class="hint">What year did your business open? Approximate is fine.</p>
+        <input type="text" id="f-year" placeholder="e.g. 2018" style="max-width:160px">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label class="lbl" for="f-desc">Brief Business Description <span class="req">*</span></label>
+        <p class="hint">Write 2–3 sentences describing your business. This will be used as your Google Business Profile description. Focus on what you do, who you serve, and what makes you a good choice.</p>
+        <textarea id="f-desc" rows="4" placeholder="e.g. Mike's Plumbing Co. has served the Springfield area since 2008, offering same-day emergency repairs, water heater replacement, and complete repiping for residential and light commercial customers."></textarea>
+      </div>
+    </div>
+
+    <div class="err-msg" id="err-1">Please complete all required fields (marked *) and check at least one day of business hours before continuing.</div>
+    <div class="form-nav">
+      <button class="btn btn-primary" onclick="nextStep(1)">Next: Your Business Type →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       STEP 2 — INDUSTRY SELECTION
+  ══════════════════════════════════════════════ -->
+  <div class="step" id="step-2">
+    <div class="card">
+      <div class="eyebrow">Step 2 of 4</div>
+      <div class="step-title">What Type of Business Are You?</div>
+      <div class="step-desc">Select the closest match. This determines which services we pre-fill for your profile.</div>
+      <div class="ind-grid" id="ind-grid"><!-- built by JS --></div>
+    </div>
+    <div class="err-msg" id="err-2">Please select your business type before continuing.</div>
+    <div class="form-nav">
+      <button class="btn btn-ghost" onclick="prevStep(2)">← Back</button>
+      <button class="btn btn-primary" onclick="nextStep(2)">Next: Your Services →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       STEP 3 — INDUSTRY QUESTIONS (dynamic)
+  ══════════════════════════════════════════════ -->
+  <div class="step" id="step-3">
+    <div class="card" id="ind-card"><!-- built by JS when industry is selected --></div>
+    <div class="err-msg" id="err-3">Please select at least one service before continuing.</div>
+    <div class="form-nav">
+      <button class="btn btn-ghost" onclick="prevStep(3)">← Back</button>
+      <button class="btn btn-primary" onclick="nextStep(3)">Next: Final Details →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       STEP 4 — FINAL QUESTIONS
+  ══════════════════════════════════════════════ -->
+  <div class="step" id="step-4">
+    <div class="card">
+      <div class="eyebrow">Step 4 of 4</div>
+      <div class="step-title">Final Details</div>
+      <div class="step-desc">Just a few more things to help your profile stand out from the competition.</div>
+
+      <div class="field">
+        <label class="lbl" for="f-diff">What makes your business stand out from competitors in your area? <span class="req">*</span></label>
+        <p class="hint">This is your chance to brag! Tell us what your customers love about you, what you do better, or what makes your approach unique.</p>
+        <textarea id="f-diff" rows="4" placeholder="e.g. We're the only plumber in Springfield with a same-day guarantee — if we can't fix it same-day, the service call is free. Customers love that we call ahead, show up on time, and clean up completely."></textarea>
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-certs">Certifications, licenses, or awards to highlight</label>
+        <p class="hint">Examples: BBB Accredited, NATE Certified, Angi Super Service Award, State Licensed &amp; Insured</p>
+        <input type="text" id="f-certs" placeholder="e.g. State Licensed & Insured, BBB A+ Rating">
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-disc">Special discounts you offer</label>
+        <p class="hint">Examples: Senior discount, Military/Veteran discount, First-time customer offer, Free estimate</p>
+        <input type="text" id="f-disc" placeholder="e.g. 10% senior discount, free estimates">
+      </div>
+      <div class="field">
+        <label class="lbl">Photos for Your Google Profile</label>
+        <p class="hint">After submitting, please email your photos to <strong>info@frontdoorprofile.com</strong>. Great options: exterior of your location or work vehicle, your work in action, team photos, before &amp; after shots, products you sell.</p>
+      </div>
+
+      <!-- PLAN SELECTION -->
+      <div class="field">
+        <label class="lbl">Which plan would you like? <span class="req">*</span></label>
+        <div id="grp-plan">
+          <label class="plan-opt">
+            <input type="radio" name="plan" value="Setup Only — $129 one-time">
+            <div>
+              <div class="plan-price">$129 <span style="font-size:.8rem;font-weight:600;color:var(--muted)">one-time</span></div>
+              <div class="plan-name">Setup Only</div>
+              <div class="plan-desc">I'll manage the profile going forward</div>
+            </div>
+          </label>
+          <label class="plan-opt">
+            <input type="radio" name="plan" value="Setup + Monthly Management — $129 setup + $39/month">
+            <div>
+              <div class="plan-price">$129 + $39<span style="font-size:.8rem;font-weight:600;color:var(--muted)">/mo</span></div>
+              <div class="plan-name">Setup + Monthly Management</div>
+              <div class="plan-desc">You handle posts, reviews, and updates every month — no contracts, cancel anytime</div>
+            </div>
+          </label>
+          <label class="plan-opt">
+            <input type="radio" name="plan" value="Not sure yet — please contact me to discuss">
+            <div>
+              <div class="plan-name" style="margin-top:0">Not sure yet</div>
+              <div class="plan-desc">Please contact me to discuss options</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="f-hear">How did you hear about FrontDoor Profile?</label>
+        <select id="f-hear">
+          <option value="">— Select one —</option>
+          <option>Google Search</option>
+          <option>Google Maps</option>
+          <option>Facebook</option>
+          <option>Instagram</option>
+          <option>Referral from a friend or colleague</option>
+          <option>Nextdoor</option>
+          <option>Flyer / Postcard</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="lbl" for="f-otherbiz">If you selected "Other" for business type, describe your business:</label>
+        <input type="text" id="f-otherbiz" placeholder="e.g. Custom furniture maker, pet photographer, etc.">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label class="lbl" for="f-extra">Anything else we should know about your business?</label>
+        <textarea id="f-extra" rows="3" placeholder="Any other details that would help us set up your profile…"></textarea>
+      </div>
+    </div>
+
+    <div class="err-msg" id="err-4">Please fill in your differentiator and select a plan before submitting.</div>
+    <div class="form-nav">
+      <button class="btn btn-ghost" onclick="prevStep(4)">← Back</button>
+      <button class="btn btn-submit" id="submit-btn" onclick="submitForm()">Submit Questionnaire →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SUCCESS
+  ══════════════════════════════════════════════ -->
+  <div class="step" id="step-success">
+    <div class="card success-wrap">
+      <div class="success-icon">✓</div>
+      <h2>You're all set!</h2>
+      <p>Thank you — we received your questionnaire and will begin setting up your Google Business Profile within 1–2 business days. We'll email you at the address you provided once it's live.</p>
+      <p style="margin-top:.75rem">Don't forget to email your photos to <strong>info@frontdoorprofile.com</strong>.</p>
+      <a href="index.html">← Return to FrontDoor Profile</a>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  ⚙  CONFIGURATION — EDIT BEFORE GOING LIVE               ║
+// ╚═══════════════════════════════════════════════════════════╝
+const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+//  ↑ Replace with your Google Apps Script Web App URL after deploying Code.gs
+
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  📋  INDUSTRY DATA                                        ║
+// ║  To add an industry:  copy one block and edit it          ║
+// ║  To remove one:       delete its block                    ║
+// ║  Question types:  'text' = short answer                   ║
+// ║                   'para' = long answer (textarea)         ║
+// ║                   'mc'   = multiple choice (add opts:[])  ║
+// ╚═══════════════════════════════════════════════════════════╝
+const INDUSTRIES = [
+  {
+    name: 'Restaurant / Cafe / Food Service',
+    services: ['Dine-In','Takeout / To-Go','Curbside Pickup','Delivery (in-house)','Delivery via DoorDash / Uber Eats / Grubhub','Catering','Breakfast / Brunch','Lunch','Dinner','Happy Hour','Private Event Hosting','Outdoor / Patio Seating','Online Ordering'],
+    questions: [
+      {q:'What type of cuisine do you serve?', type:'text'},
+      {q:'Do you serve alcohol?', type:'mc', opts:['Yes — Full Bar','Beer & Wine Only','No']},
+      {q:'Do you accept reservations?', type:'mc', opts:['Yes','No — Walk-Ins Only','Preferred but not required']},
+      {q:'List your top 5–8 signature dishes or menu items:', type:'para'}
+    ]
+  },
+  {
+    name: 'HVAC (Heating & Air Conditioning)',
+    services: ['Air Conditioning Installation','Air Conditioning Repair','AC Maintenance / Tune-Up','Furnace Installation','Furnace Repair','Furnace Maintenance / Tune-Up','Heat Pump Services','Ductwork Installation & Repair','Indoor Air Quality / Filtration','Thermostat Installation & Programming','Emergency HVAC Service (24/7)','Mini-Split / Ductless Systems','Commercial HVAC'],
+    questions: [
+      {q:'Do you serve residential, commercial, or both?', type:'mc', opts:['Residential Only','Commercial Only','Both']},
+      {q:'Do you offer 24/7 emergency service?', type:'mc', opts:['Yes','No']},
+      {q:'Are you licensed and insured?', type:'mc', opts:['Yes','No']},
+      {q:'Major brands you service (e.g., Carrier, Trane, Lennox):', type:'text'}
+    ]
+  },
+  {
+    name: 'Plumbing',
+    services: ['Emergency Plumbing (24/7)','Drain Cleaning','Water Heater Installation','Water Heater Repair','Pipe Repair & Replacement','Leak Detection & Repair','Toilet Repair & Replacement','Faucet & Fixture Repair','Sewer Line Services','Water Softener / Filtration','Garbage Disposal','Repiping','Backflow Prevention','Commercial Plumbing'],
+    questions: [
+      {q:'Do you offer 24/7 emergency service?', type:'mc', opts:['Yes','No']},
+      {q:'Do you serve residential, commercial, or both?', type:'mc', opts:['Residential Only','Commercial Only','Both']},
+      {q:'Are you licensed and insured?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Landscaping / Lawn Care',
+    services: ['Lawn Mowing','Lawn Fertilization','Weed Control','Landscape Design','Mulching','Tree Trimming & Removal','Shrub & Hedge Trimming','Irrigation System Installation','Irrigation Repair','Sod Installation','Leaf Removal / Cleanup','Snow Removal','Aeration & Overseeding','Hardscaping (patios, walkways, retaining walls)'],
+    questions: [
+      {q:'Do you serve residential, commercial, or both?', type:'mc', opts:['Residential Only','Commercial Only','Both']},
+      {q:'Service schedules you typically offer:', type:'mc', opts:['Weekly','Bi-Weekly','Monthly','One-Time / Seasonal','Multiple schedules available']},
+      {q:'Do you offer free estimates?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Electrician',
+    services: ['Electrical Panel Upgrades','Outlet & Switch Installation','Light Fixture Installation','Ceiling Fan Installation','EV Charger Installation','Generator Installation','Electrical Inspections','Wiring & Rewiring','Surge Protection','Smoke & CO Detector Installation','Outdoor / Landscape Lighting','Emergency Electrical Service','Commercial Electrical'],
+    questions: [
+      {q:'Do you serve residential, commercial, or both?', type:'mc', opts:['Residential Only','Commercial Only','Both']},
+      {q:'Are you a licensed electrician?', type:'mc', opts:['Yes','No']},
+      {q:'Do you offer 24/7 emergency service?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Auto Repair / Mechanic',
+    services: ['Oil Change','Brake Service & Repair','Tire Rotation & Balancing','Tire Sales & Installation','Transmission Service','Engine Repair & Diagnostics','Air Conditioning Service','Battery Replacement','Wheel Alignment','State Inspection / Emissions','Suspension & Steering','Exhaust & Muffler','Pre-Purchase Inspections','Fleet Service'],
+    questions: [
+      {q:'Vehicle types you specialize in:', type:'mc', opts:['All Makes & Models','Domestic (Ford, GM, Chrysler)','Import / Asian (Toyota, Honda, etc.)','European (BMW, Mercedes, Audi, etc.)','Trucks & SUVs only']},
+      {q:'Do you have ASE-certified technicians?', type:'mc', opts:['Yes','No']},
+      {q:'Do you offer towing or roadside assistance?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Hair Salon',
+    services: ["Women's Haircut","Men's Haircut","Children's Haircut",'Blow Dry & Style','Single-Process Color','Highlights','Balayage / Ombré','Keratin Treatment','Perm','Hair Extensions','Updo / Special Occasion Style','Deep Conditioning Treatment'],
+    questions: [
+      {q:'Walk-ins or by appointment?', type:'mc', opts:['Walk-Ins Welcome','By Appointment Only','Both — Appointments Preferred']},
+      {q:"List your stylists' names (we'll add them to the profile):", type:'para'},
+      {q:'Hair product brands you use or sell:', type:'text'}
+    ]
+  },
+  {
+    name: 'Nail Salon',
+    services: ['Classic Manicure','Classic Pedicure','Gel Manicure','Gel Pedicure','Acrylic Nails','Dip Powder Nails','Nail Extensions','Nail Art & Design','Paraffin Treatment','Waxing','Eyebrow Threading','Eyelash Extensions'],
+    questions: [
+      {q:'Walk-ins or by appointment?', type:'mc', opts:['Walk-Ins Welcome','By Appointment Only','Both']},
+      {q:'Do you offer packages or gift cards?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Barbershop',
+    services: ["Men's Haircut","Boys' / Kids' Haircut",'Beard Trim & Shaping','Straight Razor Shave','Hot Towel Treatment','Fade & Taper','Hair Design / Lines','Scalp Treatment','Senior Haircut'],
+    questions: [
+      {q:'Walk-ins or by appointment?', type:'mc', opts:['Walk-Ins Welcome','By Appointment Only','Both']},
+      {q:"List your barbers' names:", type:'text'},
+      {q:'Do you accept card payments?', type:'mc', opts:['Yes — Card & Cash','Cash Only']}
+    ]
+  },
+  {
+    name: 'Dentist / Dental Office',
+    services: ['Routine Cleaning & Exam','X-Rays','Teeth Whitening','Tooth-Colored Fillings','Crowns & Bridges','Root Canal Treatment','Tooth Extractions','Dental Implants','Veneers','Dentures & Partials','Orthodontics / Braces','Clear Aligners (Invisalign)','Emergency Dental Care','Pediatric Dentistry'],
+    questions: [
+      {q:'Are you accepting new patients?', type:'mc', opts:['Yes','No']},
+      {q:'Insurance plans you accept (list the main ones):', type:'para'},
+      {q:'Do you offer evening or weekend appointments?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Chiropractor',
+    services: ['Chiropractic Adjustment','Back Pain Treatment','Neck Pain Treatment','Sports Injury Rehabilitation','Auto Accident Recovery','Headache & Migraine Relief','Sciatica Treatment','Posture Correction','X-Rays On-Site','Massage Therapy','Dry Needling'],
+    questions: [
+      {q:'Are you accepting new patients?', type:'mc', opts:['Yes','No']},
+      {q:'Do you accept insurance?', type:'mc', opts:['Yes','Some plans','No — Cash pay only']},
+      {q:'Do you offer a free initial consultation?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Massage Therapy / Day Spa',
+    services: ['Swedish Massage','Deep Tissue Massage','Hot Stone Massage','Prenatal Massage','Sports Massage','Couples Massage','Reflexology','Facial / Skin Care','Body Wrap / Scrub','Aromatherapy','Waxing','Lash Extensions'],
+    questions: [
+      {q:'Appointments or walk-ins?', type:'mc', opts:['By Appointment Only','Walk-Ins Welcome','Both']},
+      {q:'Do you sell gift cards?', type:'mc', opts:['Yes','No']},
+      {q:'Do you offer memberships or packages?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Pet Grooming',
+    services: ['Bath & Brush','Full Groom (bath + haircut)','Nail Trim','Ear Cleaning','Teeth Brushing','Flea & Tick Treatment','De-Shedding Treatment','De-Matting',"Puppy's First Groom",'Mobile Grooming (we come to you)'],
+    questions: [
+      {q:'Animals you groom:', type:'mc', opts:['Dogs Only','Cats Only','Dogs & Cats','All animals']},
+      {q:'Dog sizes you accommodate:', type:'mc', opts:['All sizes','Small (under 25 lbs)','Medium & small','Large & under']},
+      {q:'Appointments or drop-ins?', type:'mc', opts:['By Appointment Only','Drop-Ins Welcome','Both']}
+    ]
+  },
+  {
+    name: 'Veterinarian',
+    services: ['Wellness Exam','Vaccinations','Spay & Neuter','Dental Cleaning','Surgery','X-Rays & Diagnostics','Flea, Tick & Heartworm Prevention','Microchipping','Emergency & Urgent Care','Boarding','Grooming'],
+    questions: [
+      {q:'Animals you treat:', type:'mc', opts:['Dogs & Cats Only','All Small Animals','Exotic & Birds','All species']},
+      {q:'Are you accepting new patients?', type:'mc', opts:['Yes','No']},
+      {q:'Do you offer emergency or after-hours care?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Real Estate Agent',
+    services: ['Buyer Representation','Seller Representation / Listing','First-Time Homebuyer Assistance','Investment Properties','Relocation Services','Vacation / Second Home','New Construction','Foreclosure & Short Sale','Property Management','Commercial Real Estate','Land & Lots'],
+    questions: [
+      {q:'Areas / neighborhoods you primarily serve:', type:'para'},
+      {q:'Years in real estate:', type:'text'},
+      {q:'Languages spoken besides English:', type:'text'}
+    ]
+  },
+  {
+    name: 'Cleaning Service (Residential)',
+    services: ['Standard / Regular Cleaning','Deep Cleaning','Move-In Cleaning','Move-Out Cleaning','Post-Construction Cleaning','Recurring Weekly Service','Recurring Bi-Weekly Service','Recurring Monthly Service','Eco-Friendly / Green Cleaning','Window Cleaning','Carpet Cleaning'],
+    questions: [
+      {q:'Do you bring your own supplies?', type:'mc', opts:['Yes — we supply everything','No — client provides','We bring specialty items; client provides basics']},
+      {q:'Are your staff background-checked?', type:'mc', opts:['Yes','No']},
+      {q:'Are you bonded and insured?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Painting Contractor',
+    services: ['Interior Painting (residential)','Exterior Painting (residential)','Cabinet Painting & Refinishing','Deck & Fence Staining','Wallpaper Removal','Drywall Repair & Texturing','Commercial Interior Painting','Commercial Exterior Painting','Color Consultation','Pressure Washing'],
+    questions: [
+      {q:'Do you serve residential, commercial, or both?', type:'mc', opts:['Residential Only','Commercial Only','Both']},
+      {q:'Are you licensed and insured?', type:'mc', opts:['Yes','No']},
+      {q:'Do you offer free estimates?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Roofing Contractor',
+    services: ['Roof Replacement (full)','Roof Repair','Storm Damage Repair','Insurance Claim Assistance','Roof Inspection','Gutter Installation','Gutter Cleaning & Repair','Skylight Installation','Flat / Commercial Roofing','Fascia & Soffit Repair'],
+    questions: [
+      {q:'Roofing materials you work with:', type:'mc', opts:['Asphalt Shingle','Metal','Tile / Slate','Flat / TPO','All types']},
+      {q:'Are you licensed and insured?', type:'mc', opts:['Yes','No']},
+      {q:'Do you offer free estimates?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Pest Control',
+    services: ['General Pest Control','Termite Treatment & Prevention','Rodent / Mouse Control','Mosquito Treatment','Bed Bug Treatment','Ant Control','Cockroach Control','Wildlife Removal (raccoon, squirrel, etc.)','Bee / Wasp Removal','Seasonal Treatment Plans','Commercial Pest Control'],
+    questions: [
+      {q:'Do you serve residential, commercial, or both?', type:'mc', opts:['Residential Only','Commercial Only','Both']},
+      {q:'Do you offer emergency or same-day service?', type:'mc', opts:['Yes','No']},
+      {q:'Do you use eco-friendly or pet-safe treatments?', type:'mc', opts:['Yes','No','Available on request']}
+    ]
+  },
+  {
+    name: 'Photography',
+    services: ['Wedding Photography','Portrait Photography','Family Photography','Newborn & Maternity','Senior Photos','Corporate Headshots','Event Photography','Product Photography','Real Estate Photography','Commercial / Brand Photography','Photo Booth Rental'],
+    questions: [
+      {q:'Do you shoot indoors, outdoors, or both?', type:'mc', opts:['Both','Studio / Indoor only','Outdoor / On-location only']},
+      {q:'Is photo editing included?', type:'mc', opts:['Yes — included','Available as add-on','No']},
+      {q:'Typical turnaround time for final photos:', type:'text'}
+    ]
+  },
+  {
+    name: 'Personal Trainer / Gym / Fitness',
+    services: ['One-on-One Personal Training','Group Fitness Classes','Weight Loss Programs','Strength & Conditioning','Cardio & Endurance Training','Nutrition Coaching','Online / Virtual Training','Senior Fitness','Youth / Teen Fitness','Sports Performance','Yoga','Pilates'],
+    questions: [
+      {q:'Do you train in-person, online, or both?', type:'mc', opts:['In-Person Only','Online Only','Both']},
+      {q:'Do you offer in-home sessions?', type:'mc', opts:['Yes','No']},
+      {q:'Free first session or consultation?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Attorney / Law Office',
+    services: ['Family Law','Divorce & Separation','Child Custody','Criminal Defense','Personal Injury','Estate Planning / Wills & Trusts','Probate','Business / Corporate Law','Real Estate Law','Immigration','Bankruptcy','Traffic / DUI Defense','Employment Law'],
+    questions: [
+      {q:'Do you offer a free initial consultation?', type:'mc', opts:['Yes','No']},
+      {q:'Personal injury cases on contingency?', type:'mc', opts:['Yes','No','N/A — not personal injury']},
+      {q:'Languages spoken besides English:', type:'text'}
+    ]
+  },
+  {
+    name: 'Accounting / Tax Services',
+    services: ['Individual Tax Preparation','Business Tax Preparation','Bookkeeping','Payroll Services','Business Accounting','QuickBooks Setup & Training','IRS Problem Resolution','Business Formation (LLC, S-Corp)','Financial Planning','Nonprofit Accounting'],
+    questions: [
+      {q:'Do you have a CPA on staff?', type:'mc', opts:['Yes','No']},
+      {q:'Do you offer remote / virtual services?', type:'mc', opts:['Remote only','In-person and remote','In-person only']},
+      {q:'Any industry specialty? (e.g., restaurants, contractors, medical):', type:'text'}
+    ]
+  },
+  {
+    name: 'Childcare / Daycare',
+    services: ['Full-Day Childcare','Half-Day / Part-Time Care','Before-School Care','After-School Care','Drop-In / Occasional Care','Infant Care (0–12 months)','Toddler Care (1–3 years)','Preschool Program','Summer Camp','Homework Help'],
+    questions: [
+      {q:'Ages you serve:', type:'text'},
+      {q:'Are you state-licensed?', type:'mc', opts:['Yes','No','In process']},
+      {q:'Do you provide meals / snacks?', type:'mc', opts:['Yes — full meals','Snacks only','No — families provide']},
+      {q:'Hours of operation:', type:'text'}
+    ]
+  },
+  {
+    name: 'Tutoring / Education Services',
+    services: ['Math Tutoring','Reading & Writing','Science Tutoring','History / Social Studies','SAT / ACT Prep','College Admissions Coaching','Foreign Language','Computer / Coding Skills','Homework Help','Special Needs / Learning Disabilities Support','Online Tutoring'],
+    questions: [
+      {q:'Grades / ages you work with:', type:'text'},
+      {q:'In-person, online, or both?', type:'mc', opts:['In-Person Only','Online Only','Both']},
+      {q:'Do you offer group sessions in addition to one-on-one?', type:'mc', opts:['Yes','No — one-on-one only']}
+    ]
+  },
+  {
+    name: 'Florist',
+    services: ['Wedding Flowers & Bouquets','Event & Party Flowers','Sympathy / Funeral Arrangements','Birthday & Anniversary Bouquets','Everyday Arrangements','Same-Day Delivery','Local Delivery','Potted Plants','Succulent Arrangements','Dried & Silk Flowers','Corporate / Office Accounts'],
+    questions: [
+      {q:'Delivery area (cities / zip codes):', type:'text'},
+      {q:'Same-day delivery order cut-off time:', type:'text'},
+      {q:'Do you create custom arrangements by request?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Bakery',
+    services: ['Custom Cakes (birthday, celebration)','Wedding Cakes','Cupcakes','Cookies','Macarons','Pastries & Croissants','Bread & Rolls','Muffins & Scones','Gluten-Free Options','Vegan Options','Wholesale / Catering'],
+    questions: [
+      {q:'How can customers order?', type:'mc', opts:['Online','Phone','In-store only','Online & phone']},
+      {q:'Lead time required for custom orders:', type:'text'},
+      {q:"Your top items / what you're best known for:", type:'text'}
+    ]
+  },
+  {
+    name: 'Handyman Services',
+    services: ['Furniture Assembly','Drywall Repair & Patching','Door & Window Repair','Cabinet Installation','Shelf & Storage Installation','Tile & Grout Repair','Caulking & Weatherstripping','Gutter Cleaning','Power / Pressure Washing','Minor Plumbing Fixes','Minor Electrical Fixes','TV Mounting','Touch-Up Painting'],
+    questions: [
+      {q:'Are you insured?', type:'mc', opts:['Yes','No']},
+      {q:'How do you charge?', type:'mc', opts:['Hourly','Flat rate per job','Both — depends on job']},
+      {q:'Service area (cities you cover):', type:'text'}
+    ]
+  },
+  {
+    name: 'Insurance Agent',
+    services: ['Auto Insurance','Homeowners Insurance','Renters Insurance','Life Insurance (Term)','Life Insurance (Whole / Universal)','Health Insurance','Medicare Supplement / Medicare Advantage','Business / Commercial Insurance','Commercial Auto','Umbrella / Liability Policy','Boat / RV Insurance'],
+    questions: [
+      {q:'Are you an independent or captive agent?', type:'mc', opts:['Independent Agent (multiple companies)','Captive Agent (one company, e.g., State Farm, Allstate)']},
+      {q:'Main carriers / companies you represent:', type:'para'},
+      {q:'Do you offer free quotes?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Moving Company',
+    services: ['Local Moving','Long-Distance Moving','Packing Services','Unpacking Services','Loading & Unloading Only','Furniture Assembly & Disassembly','Storage Solutions','Office / Commercial Moving','Piano Moving','Senior Moving','Junk Removal'],
+    questions: [
+      {q:'Do you serve residential, commercial, or both?', type:'mc', opts:['Residential Only','Commercial Only','Both']},
+      {q:'Are you licensed and insured?', type:'mc', opts:['Yes','No']},
+      {q:'Minimum charge or minimum hours:', type:'text'},
+      {q:'Do you offer free estimates?', type:'mc', opts:['Yes','No']}
+    ]
+  },
+  {
+    name: 'Other (not listed above)',
+    services: [],
+    questions: [
+      {q:'Describe your business type:', type:'text'},
+      {q:'List the main services you offer:', type:'para'}
+    ]
+  }
+];
+
+// ──────────────────────────────────────────────────────────
+//  DAYS OF WEEK
+// ──────────────────────────────────────────────────────────
+const DAYS = [
+  {id:'mon', label:'Monday'},   {id:'tue', label:'Tuesday'},
+  {id:'wed', label:'Wednesday'},{id:'thu', label:'Thursday'},
+  {id:'fri', label:'Friday'},   {id:'sat', label:'Saturday'},
+  {id:'sun', label:'Sunday'}
+];
+
+// ──────────────────────────────────────────────────────────
+//  BUILD HOURS PICKER
+// ──────────────────────────────────────────────────────────
+function buildHoursPicker() {
+  const wrap = document.getElementById('hours-picker');
+  DAYS.forEach(({id, label}) => {
+    const row = document.createElement('div');
+    row.className = 'day-row'; row.id = 'drow-' + id;
+    row.innerHTML =
+      `<input type="checkbox" class="day-chk" id="dchk-${id}">` +
+      `<span class="day-nm">${label}</span>` +
+      `<span class="day-cl" id="dcl-${id}">Closed</span>` +
+      `<div class="day-t" id="dt-${id}">` +
+        `<input type="time" id="do-${id}" value="09:00" aria-label="${label} open time">` +
+        `<span class="t-sep">to</span>` +
+        `<input type="time" id="dc-${id}" value="17:00" aria-label="${label} close time">` +
+      `</div>`;
+    wrap.appendChild(row);
+    row.querySelector('.day-chk').addEventListener('change', () => toggleDay(id));
+  });
+}
+
+function toggleDay(id) {
+  const open = document.getElementById('dchk-' + id).checked;
+  document.getElementById('drow-' + id).classList.toggle('open', open);
+  document.getElementById('dcl-'  + id).style.display = open ? 'none' : '';
+  document.getElementById('dt-'   + id).classList.toggle('show', open);
+}
+
+function to12h(t) {
+  if (!t) return '';
+  const [h, m] = t.split(':').map(Number);
+  return `${h % 12 || 12}:${String(m).padStart(2,'0')} ${h >= 12 ? 'PM' : 'AM'}`;
+}
+
+// ──────────────────────────────────────────────────────────
+//  BUILD INDUSTRY GRID (Step 2)
+// ──────────────────────────────────────────────────────────
+function buildIndustryGrid() {
+  const grid = document.getElementById('ind-grid');
+  INDUSTRIES.forEach((ind, i) => {
+    const el = document.createElement('label');
+    el.className = 'ind-opt';
+    el.innerHTML = `<input type="radio" name="industry" value="${i}"> ${escHtml(ind.name)}`;
+    grid.appendChild(el);
+  });
+}
+
+// ──────────────────────────────────────────────────────────
+//  BUILD INDUSTRY QUESTIONS (Step 3)
+// ──────────────────────────────────────────────────────────
+let selectedIndustry = -1;
+
+function buildIndustryQuestions(idx) {
+  const ind  = INDUSTRIES[idx];
+  const card = document.getElementById('ind-card');
+  let html = `
+    <div class="eyebrow">Step 3 of 4</div>
+    <div class="step-title">${escHtml(ind.name)}</div>
+    <div class="step-desc">Check all the services you offer. The more complete your list, the better your profile will perform in local search.</div>`;
+
+  if (ind.services.length > 0) {
+    html += `<div class="field"><label class="lbl">Which services do you offer? <span class="req">*</span>
+      <span style="font-weight:400;color:var(--muted);font-size:.77rem">— check all that apply</span></label>
+      <div class="svc-grid">`;
+    ind.services.forEach(svc => {
+      html += `<label class="svc"><input type="checkbox" name="service" value="${escAttr(svc)}"> ${escHtml(svc)}</label>`;
+    });
+    html += `</div></div>`;
+  }
+
+  html += `<div class="field"><label class="lbl" for="f-osvc">Any other services not listed above?</label>
+    <input type="text" id="f-osvc" placeholder="e.g. Additional service 1, Additional service 2"></div>`;
+
+  ind.questions.forEach((q, qi) => {
+    const id = `iq-${qi}`;
+    if (q.type === 'text') {
+      html += `<div class="field"><label class="lbl" for="${id}">${escHtml(q.q)}</label>
+        <input type="text" id="${id}" data-q="${escAttr(q.q)}"></div>`;
+    } else if (q.type === 'para') {
+      html += `<div class="field"><label class="lbl" for="${id}">${escHtml(q.q)}</label>
+        <textarea id="${id}" rows="3" data-q="${escAttr(q.q)}"></textarea></div>`;
+    } else if (q.type === 'mc') {
+      html += `<div class="field"><label class="lbl">${escHtml(q.q)}</label><div class="opt-group" data-q="${escAttr(q.q)}">`;
+      q.opts.forEach(opt => {
+        html += `<label class="opt"><input type="radio" name="${id}" value="${escAttr(opt)}"><span class="opt-text">${escHtml(opt)}</span></label>`;
+      });
+      html += `</div></div>`;
+    }
+  });
+
+  card.innerHTML = html;
+
+  // Attach service checkbox listeners
+  card.querySelectorAll('.svc input[type="checkbox"]').forEach(inp =>
+    inp.addEventListener('change', () => inp.closest('.svc').classList.toggle('sel', inp.checked))
+  );
+}
+
+// ──────────────────────────────────────────────────────────
+//  GLOBAL EVENT DELEGATION — radio highlighting
+// ──────────────────────────────────────────────────────────
+document.addEventListener('change', function(e) {
+  const inp = e.target;
+  if (inp.type !== 'radio') return;
+
+  // Industry grid
+  if (inp.name === 'industry') {
+    document.querySelectorAll('.ind-opt').forEach(o => o.classList.remove('sel'));
+    inp.closest('.ind-opt').classList.add('sel');
+    selectedIndustry = parseInt(inp.value, 10);
+    buildIndustryQuestions(selectedIndustry);
+    return;
+  }
+
+  // Plan options
+  if (inp.name === 'plan') {
+    document.querySelectorAll('#grp-plan .plan-opt').forEach(o => o.classList.remove('sel'));
+    inp.closest('.plan-opt').classList.add('sel');
+    return;
+  }
+
+  // All other radio groups (.opt-group)
+  const grp = inp.closest('.opt-group');
+  if (grp) {
+    grp.querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+    inp.closest('.opt').classList.add('sel');
+  }
+});
+
+// Location type highlighting (static radio group in Step 1)
+document.getElementById('grp-loc').addEventListener('change', function(e) {
+  this.querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+  if (e.target.type === 'radio') e.target.closest('.opt').classList.add('sel');
+});
+
+// ──────────────────────────────────────────────────────────
+//  STEP NAVIGATION
+// ──────────────────────────────────────────────────────────
+const PROG = [
+  null,
+  {label:'Step 1 of 4 — About Your Business',    pct:'25%'},
+  {label:'Step 2 of 4 — Your Business Type',      pct:'50%'},
+  {label:'Step 3 of 4 — Your Services',           pct:'75%'},
+  {label:'Step 4 of 4 — Final Details',           pct:'100%'}
+];
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  if (n === 'success') {
+    document.getElementById('step-success').classList.add('active');
+    document.getElementById('prog-wrap').style.display = 'none';
+  } else {
+    document.getElementById('step-' + n).classList.add('active');
+    document.getElementById('prog-label').textContent = PROG[n].label;
+    document.getElementById('prog-pct').textContent   = PROG[n].pct;
+    document.getElementById('prog-fill').style.width  = PROG[n].pct;
+    window.scrollTo({top: 0, behavior:'smooth'});
+  }
+}
+
+function nextStep(from) {
+  clearErr(from);
+  if (!validate(from)) return;
+  showStep(from + 1);
+}
+
+function prevStep(from) { showStep(from - 1); }
+
+function clearErr(n) { document.getElementById('err-' + n).classList.remove('show'); }
+
+// ──────────────────────────────────────────────────────────
+//  VALIDATION
+// ──────────────────────────────────────────────────────────
+function validate(step) {
+  if (step === 1) {
+    const req = ['f-biz','f-owner','f-email','f-phone','f-desc'];
+    let ok = true;
+    req.forEach(id => {
+      const el = document.getElementById(id);
+      const empty = !el.value.trim();
+      el.classList.toggle('err', empty);
+      if (empty) ok = false;
+    });
+    if (!document.querySelector('input[name="loctype"]:checked')) ok = false;
+    const anyDay = DAYS.some(d => document.getElementById('dchk-' + d.id).checked);
+    if (!ok || !anyDay) { showErr(1); return false; }
+    return true;
+  }
+  if (step === 2) {
+    if (selectedIndustry < 0) { showErr(2); return false; }
+    return true;
+  }
+  if (step === 3) {
+    const ind = INDUSTRIES[selectedIndustry];
+    if (ind.services.length > 0 && !document.querySelector('#ind-card input[name="service"]:checked')) {
+      showErr(3); return false;
+    }
+    return true;
+  }
+  if (step === 4) {
+    const diff = document.getElementById('f-diff');
+    const ok = diff.value.trim() && document.querySelector('input[name="plan"]:checked');
+    diff.classList.toggle('err', !diff.value.trim());
+    if (!ok) { showErr(4); return false; }
+    return true;
+  }
+  return true;
+}
+
+function showErr(n) { document.getElementById('err-' + n).classList.add('show'); }
+
+// ──────────────────────────────────────────────────────────
+//  COLLECT ALL FORM DATA
+// ──────────────────────────────────────────────────────────
+function collectData() {
+  // Hours
+  const hours = {};
+  DAYS.forEach(({id}) => {
+    const open = document.getElementById('dchk-' + id).checked;
+    hours[id] = {
+      open:  open ? to12h(document.getElementById('do-' + id).value) : '',
+      close: open ? to12h(document.getElementById('dc-' + id).value) : ''
+    };
+  });
+
+  // Services (checked items)
+  const services = Array.from(
+    document.querySelectorAll('#ind-card input[name="service"]:checked')
+  ).map(i => i.value);
+
+  // Industry text/textarea answers
+  const qa = {};
+  document.querySelectorAll('#ind-card [data-q]').forEach(el => {
+    if (el.value && el.value.trim()) qa[el.dataset.q] = el.value.trim();
+  });
+  // Industry radio answers
+  document.querySelectorAll('#ind-card .opt-group[data-q]').forEach(grp => {
+    const checked = grp.querySelector('input[type="radio"]:checked');
+    if (checked) qa[grp.dataset.q] = checked.value;
+  });
+
+  const osvc = document.getElementById('f-osvc');
+
+  return {
+    businessName:   document.getElementById('f-biz').value.trim(),
+    ownerName:      document.getElementById('f-owner').value.trim(),
+    email:          document.getElementById('f-email').value.trim(),
+    phone:          document.getElementById('f-phone').value.trim(),
+    website:        document.getElementById('f-web').value.trim(),
+    locationType:   (document.querySelector('input[name="loctype"]:checked') || {}).value || '',
+    address:        document.getElementById('f-addr').value.trim(),
+    serviceArea:    document.getElementById('f-area').value.trim(),
+    hours,
+    yearEstablished: document.getElementById('f-year').value.trim(),
+    description:    document.getElementById('f-desc').value.trim(),
+    industry:       selectedIndustry >= 0 ? INDUSTRIES[selectedIndustry].name : '',
+    services,
+    otherServices:  osvc ? osvc.value.trim() : '',
+    industryQA:     qa,
+    differentiator: document.getElementById('f-diff').value.trim(),
+    certifications: document.getElementById('f-certs').value.trim(),
+    discounts:      document.getElementById('f-disc').value.trim(),
+    plan:           (document.querySelector('input[name="plan"]:checked') || {}).value || '',
+    hearAbout:      document.getElementById('f-hear').value,
+    otherBusiness:  document.getElementById('f-otherbiz').value.trim(),
+    additionalInfo: document.getElementById('f-extra').value.trim()
+  };
+}
+
+// ──────────────────────────────────────────────────────────
+//  SUBMIT
+// ──────────────────────────────────────────────────────────
+function submitForm() {
+  clearErr(4);
+  if (!validate(4)) return;
+
+  if (SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    alert('Setup required: please replace SCRIPT_URL at the top of form.html with your Google Apps Script URL.\n\nSee the setup instructions in Code.gs.');
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode:   'no-cors',
+    body:   JSON.stringify(collectData())
+  })
+  .finally(() => showStep('success'));
+}
+
+// ──────────────────────────────────────────────────────────
+//  HELPERS
+// ──────────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) { return escHtml(s); }
+
+// ──────────────────────────────────────────────────────────
+//  INIT
+// ──────────────────────────────────────────────────────────
+buildHoursPicker();
+buildIndustryGrid();
+</script>
+</body>
+</html>
