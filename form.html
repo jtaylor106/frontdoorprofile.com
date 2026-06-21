@@ -1007,7 +1007,19 @@ function validate(step) {
     if (!document.querySelector('input[name="listingstatus"]:checked')) ok = false;
     if (!document.querySelector('input[name="gacct"]:checked')) ok = false;
     const anyDay = DAYS.some(d => document.getElementById('dchk-' + d.id).checked);
-    if (!ok || !anyDay) { showErr(1); return false; }
+    if (!ok || !anyDay) {
+      let msg;
+      if (!ok && !anyDay) {
+        msg = 'Please complete all required fields (marked *) and check at least one day of business hours before continuing.';
+      } else if (!ok) {
+        msg = 'Please complete all required fields (marked *) before continuing.';
+      } else {
+        msg = 'Please check at least one day of business hours before continuing.';
+      }
+      document.getElementById('err-1').textContent = msg;
+      showErr(1);
+      return false;
+    }
     return true;
   }
   if (step === 2) {
