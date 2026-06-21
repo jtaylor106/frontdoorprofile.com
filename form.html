@@ -227,6 +227,12 @@
 
 <div class="wrap">
 
+  <!-- Honeypot — invisible to humans, catches bots that auto-fill every input. Do not remove. -->
+  <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+    <label for="f-honeypot">Company Website</label>
+    <input type="text" id="f-honeypot" name="company_website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  </div>
+
   <!-- PROGRESS -->
   <div class="prog-wrap" id="prog-wrap">
     <div class="prog-meta">
@@ -487,6 +493,7 @@
 // ╚═══════════════════════════════════════════════════════════╝
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLPE2fmB_7x8bBeuK3UFV1uOusZolMT_OXbYLqpK6dvsuvP6sQGrWXoUJ5BEttVPxIQw/exec';
 // Google Apps Script Web App URL — update here and in checkin.html if you redeploy
+const MAX_TEXT_LEN = 5000; // mirror server-side cap + checkin.html; ~800–1000 words per field
 
 
 // ╔═══════════════════════════════════════════════════════════╗
@@ -1086,7 +1093,8 @@ function collectData() {
     additionalInfo: document.getElementById('f-extra').value.trim(),
     googleListingStatus: (document.querySelector('input[name="listingstatus"]:checked') || {}).value || '',
     googleAccountStatus: (document.querySelector('input[name="gacct"]:checked') || {}).value || '',
-    googleAccountEmail: document.getElementById('f-gacct-email').value.trim()
+    googleAccountEmail: document.getElementById('f-gacct-email').value.trim(),
+    companyWebsite: document.getElementById('f-honeypot').value // honeypot — must stay empty; server rejects if filled
   };
 }
 
@@ -1126,6 +1134,14 @@ async function submitForm() {
     return;
   }
 
+  // Visible guard: free-text length, mirroring the server cap. Runs before the button is
+  // disabled and before photo compression, so a failed check leaves the form fully usable.
+  const overLong = findOverLengthField(collectData());
+  if (overLong) {
+    alert('"' + overLong + '" is too long (over ' + MAX_TEXT_LEN + ' characters). Please shorten it and try again.');
+    return;
+  }
+
   const btn = document.getElementById('submit-btn');
   btn.textContent = 'Submitting…'; btn.disabled = true;
 
@@ -1150,6 +1166,29 @@ async function submitForm() {
 // ──────────────────────────────────────────────────────────
 //  HELPERS
 // ──────────────────────────────────────────────────────────
+function findOverLengthField(val, path) {
+  path = path || '';
+  if (typeof val === 'string') {
+    return val.length > MAX_TEXT_LEN ? (path || 'this field') : null;
+  }
+  if (Array.isArray(val)) {
+    for (let i = 0; i < val.length; i++) {
+      const hit = findOverLengthField(val[i], path + '[' + i + ']');
+      if (hit) return hit;
+    }
+    return null;
+  }
+  if (val && typeof val === 'object') {
+    for (const k in val) {
+      if (!Object.prototype.hasOwnProperty.call(val, k)) continue;
+      const hit = findOverLengthField(val[k], path ? path + '.' + k : k);
+      if (hit) return hit;
+    }
+    return null;
+  }
+  return null;
+}
+
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
